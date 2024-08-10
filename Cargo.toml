@@ -1,14 +1,21 @@
 [package]
-name = "openmpt-sys"
-version = "0.2.0"
-authors = ["Mika Attila <radiantstatue@gmail.com>"]
+name = "libopenmpt-sys"
+version = "0.3.0"
+authors = ["Mika Attila <radiantstatue@gmail.com>", "Austin Baugh <austin@serene.cafe>"]
 links = "openmpt"
 build = "build.rs"
 license = "BSD-3-Clause"
-repository = "https://github.com/crumblingstatue/rust-openmpt-sys"
+repository = "https://github.com/aubaugh/libopenmpt-sys"
 description = "Raw bindings for libopenmpt"
 keywords = ["music", "mod", "module"]
 edition = "2021"
 
 [dev-dependencies]
 cpal = "0.15"
+
+[build-dependencies]
+pkg-config = "0.3.30"
+bindgen = { version = "0.69.4", optional =  true }
+
+[features]
+generate-bindings = ["bindgen"]

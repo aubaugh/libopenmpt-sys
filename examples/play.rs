@@ -19,14 +19,14 @@ fn desired_config(cfg: &SupportedStreamConfigRange) -> bool {
 }
 
 struct Module {
-    handle: *mut openmpt_sys::openmpt_module,
+    handle: *mut libopenmpt_sys::openmpt_module,
     pub playback_end: Arc<AtomicBool>,
 }
 
 impl Module {
     fn read(&mut self, rate: i32, data: &mut [f32]) {
         unsafe {
-            let n_read = openmpt_sys::openmpt_module_read_interleaved_float_stereo(
+            let n_read = libopenmpt_sys::openmpt_module_read_interleaved_float_stereo(
                 self.handle,
                 rate,
                 data.len() / 2,
@@ -50,7 +50,7 @@ fn main() {
     let path = std::env::args().nth(1).expect("Need path to module file");
     let mod_data = std::fs::read(path).unwrap();
     let mod_handle = unsafe {
-        openmpt_sys::openmpt_module_create_from_memory2(
+        libopenmpt_sys::openmpt_module_create_from_memory2(
             mod_data.as_ptr() as *const c_void,
             mod_data.len(),
             Some(logfunc),
